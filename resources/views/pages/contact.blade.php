@@ -123,19 +123,56 @@
                     <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
                         <h2 class="text-2xl font-display font-bold text-gray-900 mb-6">Envíanos un Mensaje</h2>
                         
-                        <form action="#" method="POST" class="space-y-6">
+                        <!-- Mensajes de alerta -->
+                        @if(session('success'))
+                            <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl text-green-800 flex items-center">
+                                <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        
+                        @if(session('warning'))
+                            <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl text-yellow-800 flex items-center">
+                                <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                                {{ session('warning') }}
+                            </div>
+                        @endif
+                        
+                        @if($errors->any())
+                            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-800">
+                                <div class="flex items-center mb-2">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span class="font-semibold">Por favor corrige los siguientes errores:</span>
+                                </div>
+                                <ul class="list-disc list-inside text-sm space-y-1">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        
+                        <form action="{{ route('contact.submit') }}" method="POST" class="space-y-6">
                             @csrf
                             <div class="grid sm:grid-cols-2 gap-6">
                                 <div>
-                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nombre <span class="text-red-500">*</span></label>
                                     <input type="text" id="name" name="name" required
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                                           value="{{ old('name') }}"
+                                           class="w-full px-4 py-3 border {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }} rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                                            placeholder="Tu nombre">
                                 </div>
                                 <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico <span class="text-red-500">*</span></label>
                                     <input type="email" id="email" name="email" required
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                                           value="{{ old('email') }}"
+                                           class="w-full px-4 py-3 border {{ $errors->has('email') ? 'border-red-500' : 'border-gray-300' }} rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                                            placeholder="tu@email.com">
                                 </div>
                             </div>
@@ -143,31 +180,45 @@
                             <div>
                                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
                                 <input type="tel" id="phone" name="phone"
+                                       value="{{ old('phone') }}"
                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                                        placeholder="+57 300 123 4567">
                             </div>
                             
                             <div>
-                                <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Asunto</label>
+                                <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Asunto <span class="text-red-500">*</span></label>
                                 <select id="subject" name="subject" required
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+                                        class="w-full px-4 py-3 border {{ $errors->has('subject') ? 'border-red-500' : 'border-gray-300' }} rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
                                     <option value="">Selecciona un asunto</option>
-                                    <option value="admisiones">Información de Admisiones</option>
-                                    <option value="academico">Consulta Académica</option>
-                                    <option value="empleo">Oportunidades de Empleo</option>
-                                    <option value="otro">Otro</option>
+                                    <option value="admisiones" {{ old('subject') == 'admisiones' ? 'selected' : '' }}>Información de Admisiones</option>
+                                    <option value="academico" {{ old('subject') == 'academico' ? 'selected' : '' }}>Consulta Académica</option>
+                                    <option value="empleo" {{ old('subject') == 'empleo' ? 'selected' : '' }}>Oportunidades de Empleo</option>
+                                    <option value="otro" {{ old('subject') == 'otro' ? 'selected' : '' }}>Otro</option>
                                 </select>
                             </div>
                             
                             <div>
-                                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Mensaje <span class="text-red-500">*</span></label>
                                 <textarea id="message" name="message" rows="4" required
-                                          class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
-                                          placeholder="Escribe tu mensaje aquí..."></textarea>
+                                          class="w-full px-4 py-3 border {{ $errors->has('message') ? 'border-red-500' : 'border-gray-300' }} rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
+                                          placeholder="Escribe tu mensaje aquí...">{{ old('message') }}</textarea>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded-xl p-4 flex items-start space-x-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                </svg>
+                                <div class="text-sm text-gray-600">
+                                    <p class="font-medium text-gray-700">También recibirás el mensaje por WhatsApp</p>
+                                    <p>Al enviar el formulario, se abrirá WhatsApp para que confirmes el envío del mensaje.</p>
+                                </div>
                             </div>
                             
                             <button type="submit" 
                                     class="w-full px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
                                 Enviar Mensaje
                                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>

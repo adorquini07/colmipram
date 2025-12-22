@@ -132,7 +132,7 @@
                     ¿Quieres formar parte de nuestro equipo?
                 </h2>
                 <p class="text-gray-600 mb-8 max-w-2xl mx-auto">
-                    Buscamos profesionales apasionados por la educación. Si te interesa ser parte de COLMIPRAM, 
+                    Buscamos profesionales apasionados por la educación. Si te interesa ser parte del Colegio Mis Primeros Amiguitos, 
                     contáctanos y cuéntanos sobre ti.
                 </p>
                 <a href="{{ route('contact') }}" class="inline-flex items-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors shadow-lg hover:shadow-xl">

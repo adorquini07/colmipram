@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Colegio COLMIPRAM - Formando el futuro de nuestros estudiantes">
-    <title>@yield('title', 'COLMIPRAM') - Colegio</title>
+    <meta name="description" content="Colegio Mis Primeros Amiguitos - Educar al Niño para no Castigar al Hombre - Bosconia, Cesar">
+    <title>@yield('title', 'Inicio') - Colegio Mis Primeros Amiguitos</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/imagen_colmipram.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/imagen_colmipram.png') }}">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,11 +112,10 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg">
-                        <span class="text-white font-bold text-xl">C</span>
-                    </div>
-                    <div>
-                        <span class="text-2xl font-bold text-gray-800">COLMI<span class="text-primary-600">PRAM</span></span>
+                    <img src="{{ asset('images/imagen_colmipram.png') }}" alt="Logo Colegio Mis Primeros Amiguitos" class="w-14 h-14 rounded-full shadow-lg">
+                    <div class="hidden sm:block">
+                        <span class="text-lg font-bold text-gray-800 leading-tight block">Mis Primeros</span>
+                        <span class="text-lg font-bold text-primary-600 leading-tight">Amiguitos</span>
                     </div>
                 </a>
                 
@@ -169,14 +172,18 @@
                 <!-- About -->
                 <div class="lg:col-span-2">
                     <div class="flex items-center space-x-3 mb-6">
-                        <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
-                            <span class="text-white font-bold text-xl">C</span>
+                        <img src="{{ asset('images/imagen_colmipram.png') }}" alt="Logo" class="w-14 h-14 rounded-full bg-white p-1">
+                        <div>
+                            <span class="text-xl font-bold block">Mis Primeros Amiguitos</span>
+                            <span class="text-sm text-gray-400">Bosconia - Cesar</span>
                         </div>
-                        <span class="text-2xl font-bold">COLMIPRAM</span>
                     </div>
+                    <p class="text-gray-400 leading-relaxed mb-6 italic">
+                        "Educar al Niño para no Castigar al Hombre"
+                    </p>
                     <p class="text-gray-400 leading-relaxed mb-6">
                         Formando estudiantes íntegros con valores, conocimiento y habilidades para enfrentar los retos del futuro. 
-                        Nuestra misión es educar con excelencia desde párvulo hasta quinto grado.
+                        Educación de calidad desde párvulo hasta quinto grado.
                     </p>
                     <!-- Social Links -->
                     <div class="flex space-x-4">
@@ -243,7 +250,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                     <p class="text-gray-500 text-sm">
-                        © {{ date('Y') }} COLMIPRAM. Todos los derechos reservados.
+                        © {{ date('Y') }} Colegio Mis Primeros Amiguitos. Todos los derechos reservados.
                     </p>
                     <div class="flex space-x-6 text-sm">
                         <a href="#" class="text-gray-500 hover:text-gray-400">Política de Privacidad</a>

@@ -21,3 +21,4 @@ Route::get('/profesores', [PageController::class, 'teachers'])->name('teachers')
 
 // Contacto
 Route::get('/contacto', [PageController::class, 'contact'])->name('contact');
+Route::post('/contacto', [PageController::class, 'contactSubmit'])->name('contact.submit');

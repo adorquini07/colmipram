@@ -51,14 +51,17 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-2xl">
                     <span class="inline-block px-4 py-2 bg-secondary-500/20 text-secondary-300 rounded-full text-sm font-medium mb-6 backdrop-blur-sm border border-secondary-500/30">
-                        🎓 Educación de Calidad desde Párvulo hasta Quinto
+                        🎓 Bosconia, Cesar - Educación de Calidad
                     </span>
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
-                        Formando el <span class="text-secondary-400">futuro</span> de nuestros estudiantes
+                        Colegio <span class="text-secondary-400">Mis Primeros Amiguitos</span>
                     </h1>
+                    <p class="text-2xl text-secondary-300 mb-4 italic font-medium">
+                        "Educar al Niño para no Castigar al Hombre"
+                    </p>
                     <p class="text-xl text-gray-200 mb-8 leading-relaxed">
-                        En COLMIPRAM educamos con amor, valores y excelencia académica. 
-                        Acompañamos a cada estudiante en su camino hacia el éxito.
+                        Formamos estudiantes íntegros con valores, amor y excelencia académica 
+                        desde párvulo hasta quinto grado.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="{{ route('contact') }}" class="px-8 py-4 bg-secondary-500 hover:bg-secondary-600 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-center">
@@ -119,9 +122,12 @@
                 <div class="relative">
                     <div class="absolute -top-4 -left-4 w-72 h-72 bg-primary-200 rounded-full opacity-50 blur-3xl"></div>
                     <div class="absolute -bottom-4 -right-4 w-72 h-72 bg-secondary-200 rounded-full opacity-50 blur-3xl"></div>
-                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80" 
-                         alt="Estudiantes del colegio" 
-                         class="relative rounded-3xl shadow-2xl w-full object-cover h-[400px]">
+                    <div class="relative bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center justify-center h-[400px]">
+                        <img src="{{ asset('images/imagen_colmipram.png') }}" 
+                             alt="Logo Colegio Mis Primeros Amiguitos" 
+                             class="w-64 h-64 object-contain mb-4">
+                        <p class="text-center text-gray-600 font-medium">Bosconia - Cesar</p>
+                    </div>
                 </div>
                 
                 <div class="space-y-8">
@@ -136,9 +142,9 @@
                             <h3 class="text-2xl font-bold text-gray-900">Nuestra Misión</h3>
                         </div>
                         <p class="text-gray-600 leading-relaxed">
-                            Formar estudiantes íntegros, con sólidos valores éticos y morales, capaces de enfrentar 
-                            los retos del mundo actual. Brindamos educación de calidad que desarrolla el pensamiento 
-                            crítico, la creatividad y las habilidades sociales de nuestros alumnos.
+                            Educar al niño para formar ciudadanos responsables, con sólidos valores éticos y morales, 
+                            capaces de contribuir positivamente a la sociedad. Brindamos educación de calidad que 
+                            desarrolla el pensamiento crítico, la creatividad y las habilidades sociales.
                         </p>
                     </div>
                     
@@ -154,9 +160,9 @@
                             <h3 class="text-2xl font-bold text-gray-900">Nuestra Visión</h3>
                         </div>
                         <p class="text-gray-600 leading-relaxed">
-                            Ser reconocidos como una institución educativa líder, comprometida con la excelencia 
-                            académica y la formación integral. Aspiramos a ser el colegio preferido por las familias 
-                            que buscan lo mejor para sus hijos, donde cada estudiante alcance su máximo potencial.
+                            Ser reconocidos en Bosconia y el Cesar como una institución educativa líder, comprometida 
+                            con la excelencia académica y la formación integral. Aspiramos a ser el colegio preferido 
+                            por las familias donde cada estudiante alcance su máximo potencial.
                         </p>
                     </div>
                 </div>
@@ -308,7 +314,7 @@
                     ¿Listo para formar parte de nuestra familia?
                 </h2>
                 <p class="text-xl text-primary-100 mb-8">
-                    Contáctanos hoy y descubre por qué COLMIPRAM es la mejor opción para la educación de tus hijos.
+                    Contáctanos hoy y descubre por qué el Colegio Mis Primeros Amiguitos es la mejor opción para la educación de tus hijos.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="{{ route('contact') }}" class="px-8 py-4 bg-white text-primary-700 font-semibold rounded-xl hover:bg-gray-100 transition-colors shadow-lg">
