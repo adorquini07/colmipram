@@ -51,7 +51,7 @@
                             </div>
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900">Dirección</h3>
-                                <p class="text-gray-600">Calle Principal #123<br>Ciudad, Departamento</p>
+                                <p class="text-gray-600">Cra 21 # 15 -54, Barrio  San Juan Bosco<br>Bosconia - Cesar</p>
                             </div>
                         </div>
                         
