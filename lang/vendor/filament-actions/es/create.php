@@ -2,7 +2,7 @@
 
 return [
     'single' => [
-        'label' => 'Nuevo :label',
+        'label' => 'Crear :label',
         'modal' => [
             'heading' => 'Crear :label',
             'actions' => [
@@ -16,9 +16,8 @@ return [
         ],
         'notifications' => [
             'created' => [
-                'title' => 'Creado',
+                'title' => 'Creado exitosamente',
             ],
         ],
     ],
 ];
-

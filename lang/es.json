@@ -1,4 +1,13 @@
 {
+    "Create": "Crear",
+    "Create :label": "Crear :label",
+    "Create & create another": "Crear y crear otro",
+    "Cancel": "Cancelar",
+    "Save": "Guardar",
+    "Save changes": "Guardar cambios",
+    "Edit": "Editar",
+    "Edit :label": "Editar :label",
+    "Delete": "Eliminar",
     "Dashboard": "Panel de Control",
     "Welcome": "Bienvenido",
     "Sign out": "Cerrar sesión",

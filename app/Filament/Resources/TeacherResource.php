@@ -4,8 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TeacherResource\Pages;
 use App\Models\Teacher;
-use Filament\Forms;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -43,34 +49,34 @@ class TeacherResource extends Resource
     {
         return $schema
             ->schema([
-                Forms\Components\Section::make('Información Personal')
+                Section::make('Información Personal')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label('Nombre')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('last_name')
+                        TextInput::make('last_name')
                             ->label('Apellido')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->label('Correo Electrónico')
                             ->email()
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
+                        TextInput::make('phone')
                             ->label('Teléfono')
                             ->tel()
                             ->maxLength(255),
                     ])->columns(2),
-                Forms\Components\Section::make('Información Profesional')
+                Section::make('Información Profesional')
                     ->schema([
-                        Forms\Components\TextInput::make('position')
+                        TextInput::make('position')
                             ->label('Cargo')
                             ->placeholder('Ej: Profesor de Matemáticas')
                             ->maxLength(255),
-                        Forms\Components\Toggle::make('is_group_director')
+                        Toggle::make('is_group_director')
                             ->label('Es Director de Grupo')
                             ->default(false)
                             ->helperText('Marque si este profesor es director de grupo'),
@@ -126,12 +132,12 @@ class TeacherResource extends Resource
                     ->falseLabel('Solo No Directores'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                DeleteBulkAction::make(),
                 ]),
             ]);
     }

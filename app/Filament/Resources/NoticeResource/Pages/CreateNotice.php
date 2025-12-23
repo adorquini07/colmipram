@@ -16,5 +16,28 @@ class CreateNotice extends CreateRecord
 
         return $data;
     }
+
+    protected function getCreateFormAction(): \Filament\Actions\Action
+    {
+        return parent::getCreateFormAction()
+            ->label('Crear');
+    }
+
+    protected function getCreateAnotherFormAction(): \Filament\Actions\Action
+    {
+        return parent::getCreateAnotherFormAction()
+            ->label('Crear y crear otro');
+    }
+
+    protected function getCancelFormAction(): \Filament\Actions\Action
+    {
+        return parent::getCancelFormAction()
+            ->label('Cancelar');
+    }
+
+    public function getTitle(): string
+    {
+        return 'Crear Noticia';
+    }
 }
 

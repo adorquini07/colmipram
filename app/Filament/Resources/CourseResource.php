@@ -10,7 +10,10 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -49,15 +52,15 @@ class CourseResource extends Resource
     {
         return $schema
             ->schema([
-                Forms\Components\Section::make('Información del Curso')
+                Section::make('Información del Curso')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label('Nombre del Curso')
                             ->placeholder('Ej: 1A, 2B, 3C')
                             ->required()
                             ->maxLength(255)
                             ->helperText('Ingrese el nombre del curso (ej: 1A, 2B)'),
-                        Forms\Components\Select::make('grade')
+                        Select::make('grade')
                             ->label('Grado')
                             ->options([
                                 'Párvulo' => 'Párvulo',
@@ -69,7 +72,7 @@ class CourseResource extends Resource
                             ])
                             ->required()
                             ->native(false),
-                        Forms\Components\Select::make('teacher_id')
+                        Select::make('teacher_id')
                             ->label('Director de Grupo')
                             ->relationship('teacher', 'name', fn (Builder $query) => $query->where('is_group_director', true))
                             ->getOptionLabelFromRecordUsing(fn (Teacher $record): string => "{$record->name} {$record->last_name}")
