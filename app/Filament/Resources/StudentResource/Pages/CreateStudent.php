@@ -4,6 +4,7 @@ namespace App\Filament\Resources\StudentResource\Pages;
 
 use App\Filament\Resources\StudentResource;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Notifications\Notification;
 
 class CreateStudent extends CreateRecord
 {
@@ -18,7 +19,7 @@ class CreateStudent extends CreateRecord
     protected function getCreateAnotherFormAction(): \Filament\Actions\Action
     {
         return parent::getCreateAnotherFormAction()
-            ->label('Crear y crear otro');
+            ->hidden();
     }
 
     protected function getCancelFormAction(): \Filament\Actions\Action
@@ -30,6 +31,19 @@ class CreateStudent extends CreateRecord
     public function getTitle(): string
     {
         return 'Crear Estudiante';
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    protected function getCreatedNotification(): ?Notification
+    {
+        return Notification::make()
+            ->success()
+            ->title('¡Estudiante creado!')
+            ->body('El estudiante ha sido creado exitosamente.');
     }
 }
 
