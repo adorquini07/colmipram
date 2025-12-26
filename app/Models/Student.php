@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Modelo Student (Estudiante)
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $full_name Nombre completo del estudiante (atributo calculado)
  * @property-read \App\Models\Course|null $course Relación con el curso
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payment[] $payments Pagos del estudiante
  */
 class Student extends Model
 {
@@ -65,5 +67,49 @@ class Student extends Model
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
+    }
+
+    /**
+     * Obtiene los pagos del estudiante.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany Relación con el modelo Payment
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Verifica si el estudiante ha pagado la mensualidad del mes actual.
+     */
+    public function hasPaidCurrentMonth(): bool
+    {
+        return $this->payments()
+            ->where('type', Payment::TYPE_MENSUALIDAD)
+            ->where('month', now()->month)
+            ->where('year', now()->year)
+            ->exists();
+    }
+
+    /**
+     * Verifica si el estudiante ha pagado la matrícula del año actual.
+     */
+    public function hasPaidEnrollment(): bool
+    {
+        return $this->payments()
+            ->where('type', Payment::TYPE_MATRICULA)
+            ->where('year', now()->year)
+            ->exists();
+    }
+
+    /**
+     * Obtiene el estado de pago del estudiante.
+     */
+    public function getPaymentStatusAttribute(): string
+    {
+        if (!$this->hasPaidCurrentMonth()) {
+            return 'pendiente';
+        }
+        return 'al_dia';
     }
 }
