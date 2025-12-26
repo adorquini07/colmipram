@@ -159,8 +159,8 @@ class NoticeResource extends Resource
                     }),
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->label('Editar'),
+                DeleteAction::make()->label('Eliminar'),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

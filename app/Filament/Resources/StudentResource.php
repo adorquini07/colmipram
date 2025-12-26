@@ -214,8 +214,8 @@ class StudentResource extends Resource
                             ->body('El pago ha sido registrado exitosamente.')
                             ->send();
                     }),
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->label('Editar'),
+                DeleteAction::make()->label('Eliminar'),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
