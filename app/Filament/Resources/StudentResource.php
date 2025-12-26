@@ -8,8 +8,11 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -47,31 +50,31 @@ class StudentResource extends Resource
     {
         return $schema
             ->schema([
-                Forms\Components\Section::make('Información Personal')
+                Section::make('Información Personal')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label('Nombre')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('last_name')
+                        TextInput::make('last_name')
                             ->label('Apellido')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->label('Correo Electrónico')
                             ->email()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
+                        TextInput::make('phone')
                             ->label('Teléfono')
                             ->tel()
                             ->maxLength(255),
-                        Forms\Components\DatePicker::make('birth_date')
+                        DatePicker::make('birth_date')
                             ->label('Fecha de Nacimiento')
                             ->displayFormat('d/m/Y'),
                     ])->columns(2),
-                Forms\Components\Section::make('Información Académica')
+                Section::make('Información Académica')
                     ->schema([
-                        Forms\Components\Select::make('grade')
+                        Select::make('grade')
                             ->label('Grado')
                             ->options([
                                 'Párvulo' => 'Párvulo',
