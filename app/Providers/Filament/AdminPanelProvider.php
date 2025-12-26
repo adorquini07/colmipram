@@ -28,6 +28,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('COLMIPRAM')
+            ->brandLogo(asset('images/imagen_colmipram.png'))
+            ->brandLogoHeight('3rem')
+            ->favicon(asset('images/imagen_colmipram.png'))
             ->colors([
                 'primary' => Color::Amber,
             ])
