@@ -106,6 +106,13 @@ class CourseResource extends Resource
                     })
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('students_count')
+                    ->label('Alumnos')
+                    ->counts('students')
+                    ->badge()
+                    ->color('info')
+                    ->icon('heroicon-o-users')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('teacher.name')
                     ->label('Director de Grupo')
                     ->formatStateUsing(fn ($record) => $record->teacher ? "{$record->teacher->name} {$record->teacher->last_name}" : 'Sin asignar')

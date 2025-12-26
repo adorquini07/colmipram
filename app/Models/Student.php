@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Modelo Student (Estudiante)
@@ -15,10 +16,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $email Correo electrónico del estudiante
  * @property string|null $phone Teléfono del estudiante
  * @property \Illuminate\Support\Carbon|null $birth_date Fecha de nacimiento
- * @property string $grade Grado al que pertenece (Párvulo, Primero, Segundo, Tercero, Cuarto, Quinto)
+ * @property int|null $course_id ID del curso al que pertenece
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $full_name Nombre completo del estudiante (atributo calculado)
+ * @property-read \App\Models\Course|null $course Relación con el curso
  */
 class Student extends Model
 {
@@ -33,7 +35,7 @@ class Student extends Model
         'email',
         'phone',
         'birth_date',
-        'grade',
+        'course_id',
     ];
 
     /**
@@ -53,5 +55,15 @@ class Student extends Model
     public function getFullNameAttribute(): string
     {
         return "{$this->name} {$this->last_name}";
+    }
+
+    /**
+     * Obtiene el curso al que pertenece el estudiante.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo Relación con el modelo Course
+     */
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class);
     }
 }

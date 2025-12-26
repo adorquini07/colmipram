@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\StudentResource\Pages;
+use App\Models\Course;
 use App\Models\Student;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -74,16 +75,12 @@ class StudentResource extends Resource
                     ])->columns(2),
                 Section::make('Información Académica')
                     ->schema([
-                        Select::make('grade')
-                            ->label('Grado')
-                            ->options([
-                                'Párvulo' => 'Párvulo',
-                                'Primero' => 'Primero',
-                                'Segundo' => 'Segundo',
-                                'Tercero' => 'Tercero',
-                                'Cuarto' => 'Cuarto',
-                                'Quinto' => 'Quinto',
-                            ])
+                        Select::make('course_id')
+                            ->label('Curso')
+                            ->relationship('course', 'name')
+                            ->getOptionLabelFromRecordUsing(fn (Course $record): string => "{$record->name} - {$record->grade}")
+                            ->searchable(['name', 'grade'])
+                            ->preload()
                             ->required()
                             ->native(false),
                     ]),
@@ -110,10 +107,16 @@ class StudentResource extends Resource
                     ->label('Teléfono')
                     ->searchable()
                     ->icon('heroicon-m-phone'),
-                Tables\Columns\TextColumn::make('grade')
+                Tables\Columns\TextColumn::make('course.name')
+                    ->label('Curso')
+                    ->badge()
+                    ->color('primary')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('course.grade')
                     ->label('Grado')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'Párvulo' => 'info',
                         'Primero' => 'success',
                         'Segundo' => 'warning',
@@ -135,16 +138,12 @@ class StudentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('grade')
-                    ->label('Grado')
-                    ->options([
-                        'Párvulo' => 'Párvulo',
-                        'Primero' => 'Primero',
-                        'Segundo' => 'Segundo',
-                        'Tercero' => 'Tercero',
-                        'Cuarto' => 'Cuarto',
-                        'Quinto' => 'Quinto',
-                    ]),
+                Tables\Filters\SelectFilter::make('course_id')
+                    ->label('Curso')
+                    ->relationship('course', 'name')
+                    ->getOptionLabelFromRecordUsing(fn (Course $record): string => "{$record->name} - {$record->grade}")
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 EditAction::make(),
