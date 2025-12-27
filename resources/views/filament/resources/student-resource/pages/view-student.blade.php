@@ -61,24 +61,17 @@
             <div class="grid grid-cols-3 gap-4">
                 <div class="text-center p-4 rounded-lg border-2 {{ $this->record->hasPaidCurrentMonth() ? 'border-green-500 bg-green-50 dark:bg-green-500/10' : 'border-red-500 bg-red-50 dark:bg-red-500/10' }}">
                     <span class="text-4xl block mb-1">{{ $this->record->hasPaidCurrentMonth() ? '✅' : '❌' }}</span>
-                    <span class="text-xs text-gray-600 dark:text-gray-400 block">{{ $this->getMonthName(now()->month) }} {{ now()->year }}</span>
-                    <span class="font-bold {{ $this->record->hasPaidCurrentMonth() ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
-                        {{ $this->record->hasPaidCurrentMonth() ? 'PAGADO' : 'PENDIENTE' }}
-                    </span>
+                    <span class="text-xs text-gray-600 dark:text-gray-400 block">{{ $this->getMonthName(now()->month) }} {{ now()->year }}: {{ $this->record->hasPaidCurrentMonth() ? 'PAGADO' : 'PENDIENTE' }}</span>
                 </div>
 
                 <div class="text-center p-4 rounded-lg border-2 {{ $this->record->hasPaidEnrollment() ? 'border-green-500 bg-green-50 dark:bg-green-500/10' : 'border-yellow-500 bg-yellow-50 dark:bg-yellow-500/10' }}">
                     <span class="text-4xl block mb-1">{{ $this->record->hasPaidEnrollment() ? '🎓' : '⏳' }}</span>
-                    <span class="text-xs text-gray-600 dark:text-gray-400 block">Matrícula {{ now()->year }}</span>
-                    <span class="font-bold {{ $this->record->hasPaidEnrollment() ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400' }}">
-                        {{ $this->record->hasPaidEnrollment() ? 'PAGADA' : 'PENDIENTE' }}
-                    </span>
+                    <span class="text-xs text-gray-600 dark:text-gray-400 block">Matrícula: {{ now()->year }} - {{ $this->record->hasPaidEnrollment() ? 'PAGADA' : 'PENDIENTE' }}</span>
                 </div>
 
                 <div class="text-center p-4 rounded-lg border-2 border-blue-500 bg-blue-50 dark:bg-blue-500/10">
                     <span class="text-4xl block mb-1">📊</span>
-                    <span class="text-xs text-gray-600 dark:text-gray-400 block">Total Pagos</span>
-                    <span class="font-bold text-blue-600 dark:text-blue-400">{{ $this->record->payments()->count() }} REGISTROS</span>
+                    <span class="text-xs text-gray-600 dark:text-gray-400 block">Total Pagos: {{ $this->record->payments()->count() }} REGISTROS</span>
                 </div>
             </div>
         </x-filament::section>
@@ -95,46 +88,52 @@
                 <p class="text-gray-500 dark:text-gray-400">No hay pagos registrados</p>
             </div>
             @else
-            <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
-                <table class="w-full">
-                    <thead class="bg-gray-100 dark:bg-gray-800">
-                        <tr>
-                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Tipo</th>
-                            <th class="px-4 py-3 text-center text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Año</th>
-                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Mes</th>
-                            <th class="px-4 py-3 text-right text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Monto</th>
-                            <th class="px-4 py-3 text-center text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Fecha Pago</th>
-                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Notas</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                        @foreach($payments as $payment)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5">
-                            <td class="px-4 py-3">
-                                <x-filament::badge :color="$payment->type === 'matricula' ? 'info' : 'success'">
-                                    {{ $payment->type === 'matricula' ? '🎓 Matrícula' : '📆 Mensualidad' }}
-                                </x-filament::badge>
-                            </td>
-                            <td class="px-4 py-3 text-center font-bold text-gray-900 dark:text-white">{{ $payment->year }}</td>
-                            <td class="px-4 py-3 text-gray-900 dark:text-white">{{ $this->getMonthName($payment->month) }}</td>
-                            <td class="px-4 py-3 text-right font-bold text-green-600 dark:text-green-400">{{ $this->formatMoney($payment->amount) }}</td>
-                            <td class="px-4 py-3 text-center text-gray-600 dark:text-gray-400">{{ $payment->payment_date->format('d/m/Y') }}</td>
-                            <td class="px-4 py-3 text-gray-500 dark:text-gray-400 max-w-[150px] truncate">{{ $payment->notes ?? '—' }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot class="bg-gray-100 dark:bg-gray-800 border-t-2 border-gray-300 dark:border-gray-600">
-                        <tr>
-                            <td colspan="3" class="px-4 py-3 text-right font-bold text-gray-700 dark:text-gray-300">
-                                💵 Total ({{ $payments->count() }} pagos):
-                            </td>
-                            <td class="px-4 py-3 text-right font-bold text-xl text-green-600 dark:text-green-400">
-                                {{ $this->formatMoney($payments->sum('amount')) }}
-                            </td>
-                            <td colspan="2"></td>
-                        </tr>
-                    </tfoot>
-                </table>
+            <div class="space-y-3">
+                @foreach($payments as $payment)
+                <div class="flex flex-wrap items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-white/5">
+                    {{-- Tipo --}}
+                    <div class="w-32">
+                        <x-filament::badge :color="$payment->type === 'matricula' ? 'info' : 'success'" size="lg">
+                            {{ $payment->type === 'matricula' ? '🎓 Matrícula' : '📆 Mensualidad' }}
+                        </x-filament::badge>
+                    </div>
+                    
+                    {{-- Periodo --}}
+                    <div class="flex-1 min-w-[120px]">
+                        <span class="text-xs text-gray-500 dark:text-gray-400 block">📅 Periodo</span>
+                        <span class="font-medium text-gray-900 dark:text-white">{{ $this->getMonthName($payment->month) }} {{ $payment->year }}</span>
+                    </div>
+                    
+                    {{-- Monto --}}
+                    <div class="min-w-[100px] text-right">
+                        <span class="text-xs text-gray-500 dark:text-gray-400 block">💰 Monto</span>
+                        <span class="font-bold text-lg text-green-600 dark:text-green-400">{{ $this->formatMoney($payment->amount) }}</span>
+                    </div>
+                    
+                    {{-- Fecha de Pago --}}
+                    <div class="min-w-[100px]">
+                        <span class="text-xs text-gray-500 dark:text-gray-400 block">🗓️ Pagado</span>
+                        <span class="text-gray-900 dark:text-white">{{ $payment->payment_date->format('d/m/Y') }}</span>
+                    </div>
+                    
+                    {{-- Notas --}}
+                    @if($payment->notes)
+                    <div class="w-full mt-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+                        <span class="text-xs text-gray-500 dark:text-gray-400">📝 {{ $payment->notes }}</span>
+                    </div>
+                    @endif
+                </div>
+                @endforeach
+                
+                {{-- Total --}}
+                <div class="flex justify-between items-center p-4 rounded-lg bg-green-50 dark:bg-green-500/10 border-2 border-green-500">
+                    <span class="font-bold text-green-700 dark:text-green-300">
+                        💵 Total ({{ $payments->count() }} {{ $payments->count() === 1 ? 'pago' : 'pagos' }}):
+                    </span>
+                    <span class="font-bold text-2xl text-green-600 dark:text-green-400">
+                        {{ $this->formatMoney($payments->sum('amount')) }}
+                    </span>
+                </div>
             </div>
             @endif
         </x-filament::section>
