@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers\PaymentsRelationManager;
 use App\Models\Course;
-use App\Models\Payment;
 use App\Models\Student;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -14,9 +13,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -158,62 +155,10 @@ class StudentResource extends Resource
                     ->preload(),
             ])
             ->actions([
-                Action::make('registrar_pago')
-                    ->label('Pagar')
-                    ->icon('heroicon-o-banknotes')
-                    ->color('success')
-                    ->modalSubmitActionLabel('Guardar Pago')
-                    ->modalCancelActionLabel('Cancelar')
-                    ->visible(fn (Student $record): bool => !$record->hasPaidCurrentMonth())
-                    ->form([
-                        Select::make('type')
-                            ->label('Tipo de Pago')
-                            ->options([
-                                'matricula' => 'Matrícula',
-                                'mensualidad' => 'Mensualidad',
-                            ])
-                            ->default('mensualidad')
-                            ->required()
-                            ->native(false),
-                        TextInput::make('amount')
-                            ->label('Monto')
-                            ->numeric()
-                            ->prefix('$')
-                            ->required()
-                            ->minValue(0),
-                        Select::make('month')
-                            ->label('Mes')
-                            ->options([
-                                1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
-                                5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
-                                9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre',
-                            ])
-                            ->default(now()->month)
-                            ->required()
-                            ->native(false),
-                        TextInput::make('year')
-                            ->label('Año')
-                            ->numeric()
-                            ->default(now()->year)
-                            ->required(),
-                        DatePicker::make('payment_date')
-                            ->label('Fecha de Pago')
-                            ->default(now())
-                            ->required()
-                            ->displayFormat('d/m/Y'),
-                        Textarea::make('notes')
-                            ->label('Notas')
-                            ->rows(2),
-                    ])
-                    ->action(function (Student $record, array $data): void {
-                        $record->payments()->create($data);
-                        
-                        Notification::make()
-                            ->success()
-                            ->title('¡Pago registrado!')
-                            ->body('El pago ha sido registrado exitosamente.')
-                            ->send();
-                    }),
+                Action::make('view')
+                    ->label('Ver')
+                    ->icon('heroicon-o-eye')
+                    ->url(fn (Student $record): string => static::getUrl('view', ['record' => $record])),
                 EditAction::make()->label('Editar'),
                 DeleteAction::make()->label('Eliminar'),
             ])
@@ -236,6 +181,7 @@ class StudentResource extends Resource
         return [
             'index' => Pages\ListStudents::route('/'),
             'create' => Pages\CreateStudent::route('/create'),
+            'view' => Pages\ViewStudent::route('/{record}'),
             'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
     }
